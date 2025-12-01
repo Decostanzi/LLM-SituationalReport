@@ -177,36 +177,47 @@
             handleSelectionChange();
         });
 
-        async function listFilesInFolder(folderUrl) {
-            try {
-                const url = encodeURI(folderUrl + '/');
-                const resp = await fetch(url, { cache: 'no-store' });
-                if (!resp.ok) throw new Error('No index listing');
-                const text = await resp.text();
-                const filenames = new Set();
+        // async function listFilesInFolder(folderUrl) {
+        //     try {
+        //         const url = encodeURI(folderUrl + '/');
+        //         const resp = await fetch(url, { cache: 'no-store' });
+        //         if (!resp.ok) throw new Error('No index listing');
+        //         const text = await resp.text();
+        //         const filenames = new Set();
 
-                const hrefRegex = /href=["']([^"']+)["']/gi;
-                for (const m of text.matchAll(hrefRegex)) {
-                    try {
-                        const href = m[1];
-                        const decoded = decodeURIComponent(href.split('/').pop());
-                        if (/_combined_data\.json$/i.test(decoded)) filenames.add(decoded);
-                    } catch (e) {}
-                }
+        //         const hrefRegex = /href=["']([^"']+)["']/gi;
+        //         for (const m of text.matchAll(hrefRegex)) {
+        //             try {
+        //                 const href = m[1];
+        //                 const decoded = decodeURIComponent(href.split('/').pop());
+        //                 if (/_combined_data\.json$/i.test(decoded)) filenames.add(decoded);
+        //             } catch (e) {}
+        //         }
 
-                const rawRegex = /([A-Za-z0-9_\- ]+)_combined_data\.json/gi;
-                for (const m of text.matchAll(rawRegex)) {
-                    filenames.add(m[0]);
-                }
+        //         const rawRegex = /([A-Za-z0-9_\- ]+)_combined_data\.json/gi;
+        //         for (const m of text.matchAll(rawRegex)) {
+        //             filenames.add(m[0]);
+        //         }
 
-                return Array.from(filenames);
+        //         return Array.from(filenames);
                 
 
-            } catch (err) {
-                console.warn('Could not list folder', folderUrl, err);
-                return [];
-            }
-        }
+        //     } catch (err) {
+        //         console.warn('Could not list folder', folderUrl, err);
+        //         return [];
+        //     }
+        // }
+        async function listFilesInFolder(folderUrl) {
+    try {
+        const response = await fetch(`${folderUrl}/index.json`);
+        if (!response.ok) throw new Error('index.json not found');
+        const files = await response.json();
+        return files;
+    } catch (err) {
+        console.warn('Could not load index.json from', folderUrl, err);
+        return [];
+    }
+}
 
         async function populateEventSelector() {
             const selector = document.getElementById('eventSelector');
