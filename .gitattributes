@@ -1,0 +1,1 @@
+Viewer/Data/Smartbook/*.json filter=lfs diff=lfs merge=lfs -text
