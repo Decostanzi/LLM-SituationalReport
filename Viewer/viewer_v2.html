@@ -208,16 +208,16 @@
         //     }
         // }
         async function listFilesInFolder(folderUrl) {
-    try {
-        const response = await fetch(`${folderUrl}/index.json`);
-        if (!response.ok) throw new Error('index.json not found');
-        const files = await response.json();
-        return files;
-    } catch (err) {
-        console.warn('Could not load index.json from', folderUrl, err);
-        return [];
-    }
-}
+            try {
+                const response = await fetch(`${folderUrl}/index.json`);
+                if (!response.ok) throw new Error('index.json not found');
+                const files = await response.json();
+                return files;
+            } catch (err) {
+                console.warn('Could not load index.json from', folderUrl, err);
+                return [];
+            }
+        }
 
         async function populateEventSelector() {
             const selector = document.getElementById('eventSelector');
