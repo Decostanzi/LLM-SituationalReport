@@ -6,7 +6,7 @@ This repository contains the complete implementation, data, and results for the 
 
 This framework automatically generates comprehensive situation reports from humanitarian documents for specific events. The pipeline processes raw humanitarian data through multiple stages—including document clustering, question generation, answer extraction, and report synthesis—to produce structured, citation-backed reports that can be organized by topics or Sustainable Development Goals (SDGs).
 
-![Pipeline Overview](path/to/pipeline-image.png)
+![Pipeline Overview](./Images/pipeline.pdf)
 *The complete workflow from document selection to final report generation*
 
 ## Repository Structure
